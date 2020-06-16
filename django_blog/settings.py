@@ -15,7 +15,7 @@ import os
 import sys
 # 注册网站所需要的密码
 try:
-    from .passwords import *
+    from apps.passwords import *
 except :
     print('↓'*20)
     print('网站所需要的密码请重新定义')
@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     'apps.user',
     'apps.comment',
     'apps.tool',
-    'apps.ml_rec',
+    'apps.model',
     # lib
     'imagekit',  # 注册 imagekit处理压缩图片
     'mdeditor',  # django mdeditor富文本编辑器
@@ -134,7 +134,7 @@ MDEDITOR_CONFIGS = {
 HAYSTACK_CONNECTIONS = {
     'default': {
         # 选择语言解析器为自己更换的结巴分词
-        'ENGINE': 'apps.index.handler.WhooshEngine',
+        'ENGINE': 'apps.index.haystack_search_engin.WhooshEngine',
         # 保存索引文件的地址，选择主目录下，这个会自动生成
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
     },
@@ -337,5 +337,8 @@ PAGINATION_SETTINGS = {
     'SHOW_FIRST_PAGE_WHEN_INVALID': False,  # 当请求了不存在页，显示第一页
 }
 
-# 网站上线时常
+# 网站上线时长
 ONLINE_TIME_DAYS = (datetime.now() - datetime(2018, 1, 1)).days
+
+# django网站国际化
+USE_I18N  = True

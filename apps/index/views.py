@@ -20,6 +20,25 @@ from haystack.query import SearchQuerySet
 from markdown.extensions.toc import TocExtension
 from pure_pagination.mixins import PaginationMixin
 
+from apps.utils.wsme.signature import signature
+from .types import HelloResult, HelloBody
+from .handler import hello_handler
+class HelloView(generic.View):
+    """测试get请求"""
+    @signature(HelloResult)
+    def get(self, request, *args, **kwargs):
+        result = hello_handler()
+        return HelloResult(content=result)
+    
+    @signature(HelloResult, body=HelloBody)
+    def post(self, request, *args, **kwargs):
+        import json
+        print('↓'*20)
+        print(json.loads(request.body))
+        print('↑'*20)
+        result = hello_handler()
+        return HelloResult(content=result)
+    
 
 class MySearchView(SearchView):
     # 返回搜索结果集

@@ -12,15 +12,17 @@ import markdown
 import emoji
 import re
 from markdown.extensions.toc import TocExtension
-# Create your views here.
+
+# from django.views import View
+
+
+
 
 
 class TimelineView(generic.ListView):
     model = Timeline
     template_name = 'blog/timeline.html'
     context_object_name = 'timeline_list'
-
-
 
 
 class DetailView(generic.DetailView):
@@ -87,5 +89,4 @@ class CategoryView(generic.ListView):
         context_data['search_tag'] = '文章分类'
         context_data['search_instance'] = cate
         return context_data
-
 

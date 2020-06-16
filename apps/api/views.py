@@ -1,3 +1,4 @@
+from django.contrib.syndication.views import Feed
 from django.shortcuts import render
 
 # Create your views here.
@@ -57,9 +58,8 @@ class ToolLinkListSet(viewsets.ModelViewSet):
     permission_classes = (DjangoModelPermissionsOrAnonReadOnly,)
 
 
-from django.contrib.syndication.views import Feed
 class AllArticleRssFeed(Feed):
-    # 显示在聚会阅读器上的标题
+    # 显示在浏览器的标题
     title = 'Stray_Camel'
     # 跳转网址，为主页
     link = "/"
