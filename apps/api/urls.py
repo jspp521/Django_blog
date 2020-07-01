@@ -26,6 +26,6 @@ urlpatterns += [
 
 # 自定义api
 urlpatterns += [
-    path('hello/', HelloView.as_view()),
+    path('hello', HelloView.as_view()),
 ]
 

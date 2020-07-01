@@ -23,22 +23,28 @@ from pure_pagination.mixins import PaginationMixin
 from apps.utils.wsme.signature import signature
 from .types import HelloResult, HelloBody
 from .handler import hello_handler
+import json
+
 class HelloView(generic.View):
     """测试get请求"""
-    @signature(HelloResult)
-    def get(self, request, *args, **kwargs):
+    @signature(HelloResult, str, str)
+    def get(self, brand, constraint):
         result = hello_handler()
         return HelloResult(content=result)
     
-    @signature(HelloResult, body=HelloBody)
-    def post(self, request, *args, **kwargs):
-        import json
-        print('↓'*20)
-        print(json.loads(request.body))
-        print('↑'*20)
+    @signature(HelloResult, ignore_extra_args=True)
+    def post(self, request):
+        # print(11111)
+        # # body = json.loads(body.body)
+        # params = {
+        #     "test": body.test
+        # }
         result = hello_handler()
         return HelloResult(content=result)
     
+
+
+
 
 class MySearchView(SearchView):
     # 返回搜索结果集

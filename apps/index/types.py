@@ -19,7 +19,6 @@ class HelloBody(wtypes.Base):
     def validate(self):
         if not self.test :
             raise ParameterException(msg=str(_("params error")))
-        
         if self.test == "test":
-            print('good')
+            pass
         return self

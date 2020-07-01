@@ -46,7 +46,6 @@ def get_dataformat(request):
 
 def signature(*args, **kw):
     sig = _signature(*args, **kw)
-
     def decorator(f):
         args = inspect.getfullargspec(f)[0]
         ismethod = args and args[0] == 'self'
@@ -58,13 +57,27 @@ def signature(*args, **kw):
         def wrapper(*args, **kwargs):
             if ismethod:
                 self, args = args[0], args[1:]
-            request = args[0]
 
+            request, args = args[0], args[1:]
+            print('↓'*20)
+            print(funcdef, args, kwargs,
+                request.GET, request.content_params,
+                request.body,
+                request.content_type)
+            print('↑'*20)
+            args, kwargs = wsme.rest.args.get_args(
+                funcdef, args, kwargs,
+                request.GET, request.content_params,
+                request.body,
+                request.content_type
+            )
+            
             dataformat = get_dataformat(request.META)
 
             try:
                 if ismethod:
                     args = [self] + list(args)
+                    
                 result = f(*args, **kwargs)
                 # NOTE: Support setting of status_code with default 200
                 status_code = funcdef.status_code
